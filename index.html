@@ -1,68 +1,80 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amazon Tracker</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         /* ════════════════════════════════════════
            DESIGN TOKENS — Light
         ════════════════════════════════════════ */
-        :root, [data-theme="light"] {
-            --bg:             #ffffff;
-            --surface:        #f7f8fa;
-            --surface-2:      #eef0f3;
-            --border:         #e5e7eb;
-            --border-hover:   #c9cdd5;
-            --text-primary:   #1a1d23;
+        :root,
+        [data-theme="light"] {
+            --bg: #ffffff;
+            --surface: #f7f8fa;
+            --surface-2: #eef0f3;
+            --border: #e5e7eb;
+            --border-hover: #c9cdd5;
+            --text-primary: #1a1d23;
             --text-secondary: #6b7280;
-            --text-muted:     #9ca3af;
-            --accent:         #1a1d23;
-            --accent-inv:     #ffffff;
-            --easy:           #15803d;
-            --easy-bg:        #dcfce7;
-            --medium:         #b45309;
-            --medium-bg:      #fef3c7;
-            --hard:           #b91c1c;
-            --hard-bg:        #fee2e2;
-            --prog-track:     #e5e7eb;
-            --prog-fill:      #1a1d23;
-            --row-hover:      #f7f8fa;
-            --solved-text:    #b0b7c3;
-            --topbar-bg:      #ffffff;
+            --text-muted: #9ca3af;
+            --accent: #1a1d23;
+            --accent-inv: #ffffff;
+            --easy: #15803d;
+            --easy-bg: #dcfce7;
+            --medium: #b45309;
+            --medium-bg: #fef3c7;
+            --hard: #b91c1c;
+            --hard-bg: #fee2e2;
+            --prog-track: #e5e7eb;
+            --prog-fill: #1a1d23;
+            --row-hover: #f7f8fa;
+            --solved-text: #b0b7c3;
+            --topbar-bg: #ffffff;
         }
 
         /* ════════════════════════════════════════
            DESIGN TOKENS — Dark
         ════════════════════════════════════════ */
         [data-theme="dark"] {
-            --bg:             #0d1117;
-            --surface:        #161b22;
-            --surface-2:      #21262d;
-            --border:         #30363d;
-            --border-hover:   #484f58;
-            --text-primary:   #e6edf3;
+            --bg: #0d1117;
+            --surface: #161b22;
+            --surface-2: #21262d;
+            --border: #30363d;
+            --border-hover: #484f58;
+            --text-primary: #e6edf3;
             --text-secondary: #8b949e;
-            --text-muted:     #6e7681;
-            --accent:         #e6edf3;
-            --accent-inv:     #0d1117;
-            --easy:           #3fb950;
-            --easy-bg:        #0d2e1a;
-            --medium:         #e3b341;
-            --medium-bg:      #2d2109;
-            --hard:           #f85149;
-            --hard-bg:        #2d0f0f;
-            --prog-track:     #30363d;
-            --prog-fill:      #58a6ff;
-            --row-hover:      #161b22;
-            --solved-text:    #6e7681;
-            --topbar-bg:      #0d1117;
+            --text-muted: #6e7681;
+            --accent: #e6edf3;
+            --accent-inv: #0d1117;
+            --easy: #3fb950;
+            --easy-bg: #0d2e1a;
+            --medium: #e3b341;
+            --medium-bg: #2d2109;
+            --hard: #f85149;
+            --hard-bg: #2d0f0f;
+            --prog-track: #30363d;
+            --prog-fill: #58a6ff;
+            --row-hover: #161b22;
+            --solved-text: #6e7681;
+            --topbar-bg: #0d1117;
         }
 
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        html { height: 100%; }
+        html {
+            height: 100%;
+        }
 
         body {
             background: var(--bg);
@@ -78,7 +90,9 @@
            TOP BAR
         ════════════════════════════════════════ */
         .topbar {
-            position: sticky; top: 0; z-index: 20;
+            position: sticky;
+            top: 0;
+            z-index: 20;
             height: 56px;
             background: var(--topbar-bg);
             border-bottom: 1px solid var(--border);
@@ -98,18 +112,23 @@
         }
 
         .brand-icon {
-            width: 28px; height: 28px;
+            width: 28px;
+            height: 28px;
             background: var(--accent);
             border-radius: 5px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: var(--accent-inv);
             font-family: 'DM Mono', monospace;
-            font-size: 0.68rem; font-weight: 700;
+            font-size: 0.68rem;
+            font-weight: 700;
             transition: background 0.2s ease, color 0.2s ease;
         }
 
         .brand-text {
-            font-size: 0.95rem; font-weight: 700;
+            font-size: 0.95rem;
+            font-weight: 700;
             letter-spacing: -0.02em;
             color: var(--text-primary);
         }
@@ -137,7 +156,8 @@
         }
 
         .pill-track {
-            width: 70px; height: 5px;
+            width: 70px;
+            height: 5px;
             background: var(--prog-track);
             border-radius: 100px;
             overflow: hidden;
@@ -164,22 +184,40 @@
 
         /* ── Dark mode toggle ── */
         .theme-btn {
-            width: 34px; height: 34px;
+            width: 34px;
+            height: 34px;
             border: 1px solid var(--border);
             border-radius: 6px;
             background: var(--surface);
             color: var(--text-secondary);
             cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
             transition: border-color 0.15s, background 0.15s, color 0.15s;
         }
-        .theme-btn:hover { border-color: var(--border-hover); color: var(--text-primary); }
 
-        .icon-sun  { display: none; }
-        .icon-moon { display: block; }
-        [data-theme="dark"] .icon-sun  { display: block; }
-        [data-theme="dark"] .icon-moon { display: none; }
+        .theme-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--text-primary);
+        }
+
+        .icon-sun {
+            display: none;
+        }
+
+        .icon-moon {
+            display: block;
+        }
+
+        [data-theme="dark"] .icon-sun {
+            display: block;
+        }
+
+        [data-theme="dark"] .icon-moon {
+            display: none;
+        }
 
         /* ════════════════════════════════════════
            MAIN
@@ -201,6 +239,7 @@
             margin-bottom: 1.5rem;
             font-size: 0.85rem;
         }
+
         [data-theme="dark"] .fallback-notice {
             background: #1c1500;
             border-color: #9e6a03;
@@ -231,7 +270,11 @@
             white-space: nowrap;
             transition: color 0.12s, border-color 0.12s;
         }
-        .tab-btn:hover { color: var(--text-primary); }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
         .tab-btn.active {
             color: var(--text-primary);
             border-bottom-color: var(--prog-fill);
@@ -248,11 +291,16 @@
             align-items: center;
         }
 
-        .search-wrap { flex: 1; min-width: 180px; position: relative; }
+        .search-wrap {
+            flex: 1;
+            min-width: 180px;
+            position: relative;
+        }
 
         .search-icon {
             position: absolute;
-            left: 0.7rem; top: 50%;
+            left: 0.7rem;
+            top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
             pointer-events: none;
@@ -269,10 +317,12 @@
             outline: none;
             transition: border-color 0.12s, background 0.12s;
         }
+
         .toolbar input {
             width: 100%;
             padding: 0.48rem 0.75rem 0.48rem 2.1rem;
         }
+
         .toolbar select {
             padding: 0.48rem 2rem 0.48rem 0.75rem;
             min-width: 155px;
@@ -282,8 +332,12 @@
             background-repeat: no-repeat;
             background-position: right 0.6rem center;
         }
+
         .toolbar input:focus,
-        .toolbar select:focus { border-color: var(--prog-fill); background: var(--bg); }
+        .toolbar select:focus {
+            border-color: var(--prog-fill);
+            background: var(--bg);
+        }
 
         /* ════════════════════════════════════════
            FILE META ROW
@@ -296,19 +350,34 @@
             gap: 1rem;
         }
 
-        .file-meta-left { display: flex; align-items: center; gap: 0.5rem; min-width: 0; }
+        .file-meta-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 0;
+        }
 
         .file-name {
             font-family: 'DM Mono', monospace;
-            font-size: 0.82rem; font-weight: 500;
+            font-size: 0.82rem;
+            font-weight: 500;
             color: var(--text-primary);
             white-space: nowrap;
         }
 
-        .results-count { font-size: 0.78rem; color: var(--text-muted); white-space: nowrap; }
+        .results-count {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
 
         /* Per-file progress */
-        .file-prog { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+        .file-prog {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-shrink: 0;
+        }
 
         .file-prog-label {
             font-family: 'DM Mono', monospace;
@@ -318,11 +387,13 @@
         }
 
         .file-prog-track {
-            width: 90px; height: 4px;
+            width: 90px;
+            height: 4px;
             background: var(--prog-track);
             border-radius: 100px;
             overflow: hidden;
         }
+
         .file-prog-fill {
             height: 100%;
             background: var(--prog-fill);
@@ -346,7 +417,7 @@
         /* 5-column grid: checkbox | problem | difficulty | acceptance | frequency */
         .t-grid {
             display: grid;
-            grid-template-columns: 52px minmax(0,3fr) 110px 110px 110px;
+            grid-template-columns: 52px minmax(0, 3fr) 110px 110px 110px;
             align-items: center;
         }
 
@@ -365,8 +436,14 @@
             letter-spacing: 0.05em;
             padding: 0 0.75rem;
         }
-        .th.center { text-align: center; }
-        .th.right  { text-align: right; }
+
+        .th.center {
+            text-align: center;
+        }
+
+        .th.right {
+            text-align: right;
+        }
 
         /* Rows */
         .t-row {
@@ -375,24 +452,35 @@
             transition: background 0.1s;
             cursor: default;
         }
-        .t-row:last-child { border-bottom: none; }
-        .t-row:hover { background: var(--row-hover); }
-        .t-row.solved .problem-link { color: var(--solved-text); text-decoration: line-through; text-decoration-color: var(--border-hover); }
 
-        /* ── Checkbox cell ──
-           Key fix: explicit height + flex centering, no overflow issues */
+        .t-row:last-child {
+            border-bottom: none;
+        }
+
+        .t-row:hover {
+            background: var(--row-hover);
+        }
+
+        .t-row.solved .problem-link {
+            color: var(--solved-text);
+            text-decoration: line-through;
+            text-decoration-color: var(--border-hover);
+        }
+
+        /* ── Checkbox cell ── */
         .td-check {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 52px; /* match min-height of row */
+            height: 52px;
             padding: 0;
         }
 
-        /* Custom checkbox — avoids browser default sizing quirks */
+        /* Custom checkbox */
         .cb {
             position: relative;
-            width: 17px; height: 17px;
+            width: 17px;
+            height: 17px;
             flex-shrink: 0;
             display: block;
         }
@@ -403,7 +491,8 @@
             opacity: 0;
             margin: 0;
             cursor: pointer;
-            width: 100%; height: 100%;
+            width: 100%;
+            height: 100%;
             z-index: 1;
         }
 
@@ -417,25 +506,32 @@
             transition: background 0.12s, border-color 0.12s;
         }
 
-        /* Checkmark drawn with CSS — perfectly centered */
         .cb-box::after {
             content: '';
             position: absolute;
             display: none;
-            left: 4px; top: 1.5px;
-            width: 5px; height: 9px;
+            left: 4px;
+            top: 1.5px;
+            width: 5px;
+            height: 9px;
             border: 2px solid var(--accent-inv);
             border-top: none;
             border-left: none;
             transform: rotate(45deg);
         }
 
-        .cb input:checked ~ .cb-box {
+        .cb input:checked~.cb-box {
             background: var(--prog-fill);
             border-color: var(--prog-fill);
         }
-        .cb input:checked ~ .cb-box::after { display: block; }
-        .cb:hover input:not(:checked) ~ .cb-box { border-color: var(--prog-fill); }
+
+        .cb input:checked~.cb-box::after {
+            display: block;
+        }
+
+        .cb:hover input:not(:checked)~.cb-box {
+            border-color: var(--prog-fill);
+        }
 
         /* Problem cell */
         .td-prob {
@@ -464,22 +560,42 @@
             text-overflow: ellipsis;
             transition: color 0.12s;
         }
-        .problem-link:hover { color: #2563eb; }
+
+        .problem-link:hover {
+            color: #2563eb;
+        }
 
         /* Difficulty badge */
-        .td-diff { padding: 0 0.75rem; display: flex; align-items: center; }
+        .td-diff {
+            padding: 0 0.75rem;
+            display: flex;
+            align-items: center;
+        }
 
         .badge {
             display: inline-block;
-            font-size: 0.7rem; font-weight: 700;
+            font-size: 0.7rem;
+            font-weight: 700;
             padding: 0.18rem 0.55rem;
             border-radius: 100px;
             white-space: nowrap;
             letter-spacing: 0.02em;
         }
-        .badge.easy   { color: var(--easy);   background: var(--easy-bg); }
-        .badge.medium { color: var(--medium); background: var(--medium-bg); }
-        .badge.hard   { color: var(--hard);   background: var(--hard-bg); }
+
+        .badge.easy {
+            color: var(--easy);
+            background: var(--easy-bg);
+        }
+
+        .badge.medium {
+            color: var(--medium);
+            background: var(--medium-bg);
+        }
+
+        .badge.hard {
+            color: var(--hard);
+            background: var(--hard-bg);
+        }
 
         /* Stat cells */
         .td-stat {
@@ -491,16 +607,25 @@
         }
 
         .empty-state {
-            padding: 3rem; text-align: center;
-            color: var(--text-muted); font-size: 0.9rem;
+            padding: 3rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
 
         /* ════════════════════════════════════════
            PAGINATION
         ════════════════════════════════════════ */
-        .pagination { display: flex; align-items: center; justify-content: space-between; }
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-        .page-btns { display: flex; gap: 0.5rem; }
+        .page-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
 
         .btn {
             background: var(--surface);
@@ -508,13 +633,22 @@
             color: var(--text-primary);
             padding: 0.4rem 0.9rem;
             border-radius: 5px;
-            font-size: 0.8rem; font-weight: 500;
+            font-size: 0.8rem;
+            font-weight: 500;
             font-family: inherit;
             cursor: pointer;
             transition: border-color 0.12s, background 0.12s;
         }
-        .btn:hover:not(:disabled) { border-color: var(--border-hover); background: var(--surface-2); }
-        .btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+        .btn:hover:not(:disabled) {
+            border-color: var(--border-hover);
+            background: var(--surface-2);
+        }
+
+        .btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
 
         .page-info {
             font-family: 'DM Mono', monospace;
@@ -526,502 +660,565 @@
            RESPONSIVE
         ════════════════════════════════════════ */
         @media (max-width: 680px) {
-            .topbar { padding: 0 1rem; }
-            .main   { padding: 1.25rem 1rem 3rem; }
-            .t-grid { grid-template-columns: 52px minmax(0,1fr) 90px; }
-            .th:nth-child(4), .th:nth-child(5) { display: none; }
-            .td-stat { display: none; }
-            .pill-track { display: none; }
-            .file-prog-track { display: none; }
-            .brand-text { display: none; }
+            .topbar {
+                padding: 0 1rem;
+            }
+
+            .main {
+                padding: 1.25rem 1rem 3rem;
+            }
+
+            .t-grid {
+                grid-template-columns: 52px minmax(0, 1fr) 90px;
+            }
+
+            .th:nth-child(4),
+            .th:nth-child(5) {
+                display: none;
+            }
+
+            .td-stat {
+                display: none;
+            }
+
+            .pill-track {
+                display: none;
+            }
+
+            .file-prog-track {
+                display: none;
+            }
+
+            .brand-text {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
-<!-- ══ TOP BAR ══ -->
-<header class="topbar">
-    <div class="topbar-brand">
-        <div class="brand-icon">{};</div>
-        <span class="brand-text">Amazon Tracker</span>
-    </div>
+    <!-- ══ TOP BAR ══ -->
+    <header class="topbar">
+        <div class="topbar-brand">
+            <div class="brand-icon">{};</div>
+            <span class="brand-text">DSA Tracker</span>
+        </div>
 
-    <!--
-        GLOBAL PROGRESS PILL
-        Counts unique questions (deduplicated by URL) across ALL files.
-        Solving "Two Sum" in six-months counts it once even if it's in thirty-days too.
-    -->
-    <div class="global-pill" title="Unique questions completed across all files">
-        <span class="pill-label">Overall</span>
-        <div class="pill-track"><div class="pill-fill" id="global-bar"></div></div>
-        <span class="pill-fraction" id="global-fraction">0 / 0</span>
-    </div>
+        <div class="global-pill" title="Unique questions completed across all files">
+            <span class="pill-label">Overall</span>
+            <div class="pill-track">
+                <div class="pill-fill" id="global-bar"></div>
+            </div>
+            <span class="pill-fraction" id="global-fraction">0 / 0</span>
+        </div>
 
-    <!-- Dark mode toggle -->
-    <button class="theme-btn" id="theme-btn" title="Toggle dark / light mode" aria-label="Toggle dark mode">
-        <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-        <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1"  x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22"   x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1"  y1="12" x2="3"  y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22"  y1="19.78" x2="5.64"  y2="18.36"/>
-            <line x1="18.36" y1="5.64"  x2="19.78" y2="4.22"/>
-        </svg>
-    </button>
-</header>
-
-<!-- ══ MAIN ══ -->
-<main class="main">
-
-    <div id="fallback-notice" class="fallback-notice">
-        ⚠️ Could not load CSV files. Showing demo data. Serve from a local web server for real data.
-    </div>
-
-    <!-- Tabs (one per CSV file) -->
-    <div class="tabs-row" id="dataset-tabs"></div>
-
-    <!-- Search / filter / sort toolbar -->
-    <div class="toolbar">
-        <div class="search-wrap">
-            <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        <button class="theme-btn" id="theme-btn" title="Toggle dark / light mode" aria-label="Toggle dark mode">
+            <svg class="icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
-            <input type="text" id="search" placeholder="Search by name or ID…" autocomplete="off">
-        </div>
-        <select id="filter-difficulty">
-            <option value="All">All Difficulties</option>
-            <option value="Easy">Easy</option>
-            <option value="Medium">Medium</option>
-            <option value="Hard">Hard</option>
-        </select>
-        <select id="sort-by">
-            <option value="serial-asc">Sort: ID (Default)</option>
-            <option value="freq-desc">Frequency ↓</option>
-            <option value="acc-desc">Acceptance ↓</option>
-        </select>
-    </div>
+            <svg class="icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+        </button>
+    </header>
 
-    <!--
-        FILE META ROW
-        Left:  file name + filtered count
-        Right: per-file progress bar (counts raw questions in this file only)
-               — if a question appears in 3 files and is solved, it counts
-                 once per file for the per-file bar, but only once globally.
-    -->
-    <div class="file-meta">
-        <div class="file-meta-left">
-            <span class="file-name" id="current-file-label">—</span>
-            <span class="results-count" id="results-count"></span>
+    <!-- ══ MAIN ══ -->
+    <main class="main">
+
+        <div id="fallback-notice" class="fallback-notice">
+            ⚠️ Could not load CSV files. Showing demo data. Serve from a local web server for real data.
         </div>
-        <div class="file-prog">
-            <span class="file-prog-label" id="file-prog-text">0 / 0</span>
-            <div class="file-prog-track">
-                <div class="file-prog-fill" id="file-prog-bar"></div>
+
+        <div class="tabs-row" id="dataset-tabs"></div>
+
+        <div class="toolbar">
+            <div class="search-wrap">
+                <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" id="search" placeholder="Search by name or ID…" autocomplete="off">
+            </div>
+            <select id="filter-difficulty">
+                <option value="All">All Difficulties</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+            </select>
+            <select id="sort-by">
+                <option value="serial-asc">Sort: ID (Default)</option>
+                <option value="freq-desc">Frequency ↓</option>
+                <option value="acc-desc">Acceptance ↓</option>
+            </select>
+        </div>
+
+        <div class="file-meta">
+            <div class="file-meta-left">
+                <span class="file-name" id="current-file-label">—</span>
+                <span class="results-count" id="results-count"></span>
+            </div>
+            <div class="file-prog">
+                <span class="file-prog-label" id="file-prog-text">0 / 0</span>
+                <div class="file-prog-track">
+                    <div class="file-prog-fill" id="file-prog-bar"></div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- Table -->
-    <div class="table-wrap">
-        <div class="t-grid t-head">
-            <div class="th center">✓</div>
-            <div class="th">Problem</div>
-            <div class="th">Difficulty</div>
-            <div class="th right">Acceptance</div>
-            <div class="th right">Frequency</div>
+        <div class="table-wrap">
+            <div class="t-grid t-head">
+                <div class="th center">✓</div>
+                <div class="th">Problem</div>
+                <div class="th">Difficulty</div>
+                <div class="th right">Acceptance</div>
+                <div class="th right">Frequency</div>
+            </div>
+            <div id="questions-container"></div>
         </div>
-        <div id="questions-container"></div>
-    </div>
 
-    <!-- Pagination -->
-    <div class="pagination">
-        <div class="page-btns">
-            <button class="btn" id="btn-prev">← Prev</button>
-            <button class="btn" id="btn-next">Next →</button>
+        <div class="pagination">
+            <div class="page-btns">
+                <button class="btn" id="btn-prev">← Prev</button>
+                <button class="btn" id="btn-next">Next →</button>
+            </div>
+            <span class="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
         </div>
-        <span class="page-info">Page <span id="current-page">1</span> of <span id="total-pages">1</span></span>
-    </div>
 
-</main>
+    </main>
 
-<script>
-/* ═══════════════════════════════════════════════════════════════════
-   CONSTANTS
-═══════════════════════════════════════════════════════════════════ */
-const FILE_NAMES    = ['Amazon.csv', 'Microsoft.csv', 'Meta.csv', 'Google.csv', 'Apple.csv', 'Oracle.csv', 'Adobe.csv'];
-const ROWS_PER_PAGE = 30;
-const STORAGE_KEY   = 'dsa-tracker-completed-v3';
-const THEME_KEY     = 'dsa-tracker-theme';
+    <script>
+        /* ═══════════════════════════════════════════════════════════════════
+           CONSTANTS
+        ═══════════════════════════════════════════════════════════════════ */
+        const FILE_NAMES = ['Amazon.csv', 'Microsoft.csv', 'Meta.csv', 'Google.csv', 'Apple.csv', 'Oracle.csv', 'Adobe.csv', 'Nvidia.csv', 'Netflix.csv', 'GoldMan Sachs.csv', 'Atlassian.csv', 'Swiggy.csv'];
+        const ROWS_PER_PAGE = 40;
+        const STORAGE_KEY = 'dsa-tracker-completed-v3';
+        const THEME_KEY = 'dsa-tracker-theme';
 
-/* ═══════════════════════════════════════════════════════════════════
-   STORAGE LAYER
-   ── Prefers chrome.storage.sync (survives profile sync across machines)
-   ── Falls back to localStorage (works in any browser tab)
-═══════════════════════════════════════════════════════════════════ */
-const Store = (() => {
-    const cs = (typeof chrome !== 'undefined') && chrome?.storage?.sync;
+        /* ─── Strip .csv extension for display purposes ─── */
+        function displayName(filename) {
+            return filename.replace(/\.csv$/i, '');
+        }
 
-    async function get(key) {
-        if (cs) return new Promise(ok => cs.get([key], r => ok(r[key] ?? null)));
-        return localStorage.getItem(key);
-    }
+        /* ═══════════════════════════════════════════════════════════════════
+           STORAGE LAYER
+           Prefers localStorage for reliability.
+           Falls back to chrome.storage.sync if available (extension context).
+        ═══════════════════════════════════════════════════════════════════ */
+        const Store = (() => {
+            // Detect if we're in a Chrome extension context with sync storage
+            const useChrome = (
+                typeof chrome !== 'undefined' &&
+                chrome?.storage?.sync &&
+                typeof chrome.storage.sync.get === 'function'
+            );
 
-    async function set(key, val) {
-        if (cs) return new Promise(ok => cs.set({ [key]: val }, ok));
-        localStorage.setItem(key, val);
-    }
+            async function get(key) {
+                if (useChrome) {
+                    return new Promise((resolve) => {
+                        chrome.storage.sync.get([key], (result) => {
+                            if (chrome.runtime.lastError) {
+                                // Chrome storage error — fall back to localStorage
+                                resolve(localStorage.getItem(key));
+                            } else {
+                                resolve(result[key] ?? null);
+                            }
+                        });
+                    });
+                }
+                return localStorage.getItem(key);
+            }
 
-    return { get, set };
-})();
+            async function set(key, val) {
+                if (useChrome) {
+                    return new Promise((resolve) => {
+                        chrome.storage.sync.set({ [key]: val }, () => {
+                            if (chrome.runtime.lastError) {
+                                // Chrome storage error — fall back to localStorage
+                                localStorage.setItem(key, val);
+                            }
+                            resolve();
+                        });
+                    });
+                }
+                localStorage.setItem(key, val);
+            }
 
-/* ═══════════════════════════════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════════════════════════════ */
-let allDatasets     = [];           // Array< Array<Question> >
-let uniqueMap       = new Map();    // link → Question  (global deduplicated set)
-let globalCompleted = new Set();    // Set<link>         (master completion state)
+            return { get, set };
+        })();
 
-let currentDatasetIdx = 0;
-let filteredQuestions = [];
-let currentPage       = 1;
+        /* ═══════════════════════════════════════════════════════════════════
+           STATE
+        ═══════════════════════════════════════════════════════════════════ */
+        let allDatasets = [];           // Array< Array<Question> >
+        let uniqueMap = new Map();    // link → Question  (global deduplicated set)
+        let globalCompleted = new Set();    // Set<link>         (master completion state)
 
-/* ═══════════════════════════════════════════════════════════════════
-   DEMO / MOCK DATA  (used when CSV files can't be fetched)
-   Intentionally includes overlapping questions to demonstrate
-   that the global bar counts them only once.
-═══════════════════════════════════════════════════════════════════ */
-const MOCK = [
-    /* six-months.csv */
-    [
-        { id:"1",  link:"https://leetcode.com/problems/two-sum/",             name:"Two Sum",               difficulty:"Easy",   acceptance:49.2, frequency:99.5 },
-        { id:"2",  link:"https://leetcode.com/problems/add-two-numbers/",     name:"Add Two Numbers",        difficulty:"Medium", acceptance:40.1, frequency:85.0 },
-        { id:"3",  link:"https://leetcode.com/problems/longest-substring/",   name:"Longest Substring",      difficulty:"Medium", acceptance:33.8, frequency:92.1 },
-        { id:"42", link:"https://leetcode.com/problems/trapping-rain-water/", name:"Trapping Rain Water",    difficulty:"Hard",   acceptance:59.8, frequency:98.1 },
-        { id:"20", link:"https://leetcode.com/problems/valid-parentheses/",   name:"Valid Parentheses",      difficulty:"Easy",   acceptance:40.5, frequency:96.7 },
-        { id:"15", link:"https://leetcode.com/problems/3sum/",                name:"3Sum",                   difficulty:"Medium", acceptance:32.3, frequency:88.4 },
-    ],
-    /* thirty-days.csv — Two Sum & Valid Parentheses overlap with six-months */
-    [
-        { id:"42", link:"https://leetcode.com/problems/trapping-rain-water/", name:"Trapping Rain Water",    difficulty:"Hard",   acceptance:59.8, frequency:98.1 },
-        { id:"20", link:"https://leetcode.com/problems/valid-parentheses/",   name:"Valid Parentheses",      difficulty:"Easy",   acceptance:40.5, frequency:96.7 },
-        { id:"1",  link:"https://leetcode.com/problems/two-sum/",             name:"Two Sum",               difficulty:"Easy",   acceptance:49.2, frequency:99.5 },
-        { id:"56", link:"https://leetcode.com/problems/merge-intervals/",     name:"Merge Intervals",        difficulty:"Medium", acceptance:46.8, frequency:87.2 },
-    ],
-    /* three-months.csv — Two Sum & 3Sum overlap with the other files */
-    [
-        { id:"297",link:"https://leetcode.com/problems/serialize-binary-tree/",name:"Serialize Binary Tree", difficulty:"Hard",   acceptance:55.6, frequency:89.2 },
-        { id:"217",link:"https://leetcode.com/problems/contains-duplicate/",   name:"Contains Duplicate",    difficulty:"Easy",   acceptance:61.2, frequency:94.0 },
-        { id:"1",  link:"https://leetcode.com/problems/two-sum/",              name:"Two Sum",               difficulty:"Easy",   acceptance:49.2, frequency:99.5 },
-        { id:"15", link:"https://leetcode.com/problems/3sum/",                 name:"3Sum",                  difficulty:"Medium", acceptance:32.3, frequency:88.4 },
-    ],
-];
+        let currentDatasetIdx = 0;
+        let filteredQuestions = [];
+        let currentPage = 1;
 
-/* ═══════════════════════════════════════════════════════════════════
-   CSV PARSER  (header: ID,URL,Title,Difficulty,Acceptance%,Frequency%)
-═══════════════════════════════════════════════════════════════════ */
-function parseCSV(text) {
-    return text.trim().split('\n').slice(1).flatMap(line => {
-        const t = line.trim(); if (!t) return [];
-        const c = t.split(',');
-        if (c.length < 6) return [];
-        return [{
-            id:         c[0].trim(),
-            link:       c[1].trim(),
-            name:       c[2].trim(),
-            difficulty: c[3].trim(),
-            acceptance: parseFloat(c[4].replace('%', '')) || 0,
-            frequency:  parseFloat(c[5].replace('%', '')) || 0,
-        }];
-    });
-}
+        /* ═══════════════════════════════════════════════════════════════════
+           DEMO / MOCK DATA
+        ═══════════════════════════════════════════════════════════════════ */
+        const MOCK_BY_FILE = {
+            'Amazon.csv': [
+                { id: "1", link: "https://leetcode.com/problems/two-sum/", name: "Two Sum", difficulty: "Easy", acceptance: 49.2, frequency: 99.5 },
+                { id: "2", link: "https://leetcode.com/problems/add-two-numbers/", name: "Add Two Numbers", difficulty: "Medium", acceptance: 40.1, frequency: 85.0 },
+                { id: "3", link: "https://leetcode.com/problems/longest-substring/", name: "Longest Substring", difficulty: "Medium", acceptance: 33.8, frequency: 92.1 },
+                { id: "42", link: "https://leetcode.com/problems/trapping-rain-water/", name: "Trapping Rain Water", difficulty: "Hard", acceptance: 59.8, frequency: 98.1 },
+                { id: "20", link: "https://leetcode.com/problems/valid-parentheses/", name: "Valid Parentheses", difficulty: "Easy", acceptance: 40.5, frequency: 96.7 },
+                { id: "15", link: "https://leetcode.com/problems/3sum/", name: "3Sum", difficulty: "Medium", acceptance: 32.3, frequency: 88.4 },
+            ],
+            'Microsoft.csv': [
+                { id: "42", link: "https://leetcode.com/problems/trapping-rain-water/", name: "Trapping Rain Water", difficulty: "Hard", acceptance: 59.8, frequency: 98.1 },
+                { id: "20", link: "https://leetcode.com/problems/valid-parentheses/", name: "Valid Parentheses", difficulty: "Easy", acceptance: 40.5, frequency: 96.7 },
+                { id: "1", link: "https://leetcode.com/problems/two-sum/", name: "Two Sum", difficulty: "Easy", acceptance: 49.2, frequency: 99.5 },
+                { id: "56", link: "https://leetcode.com/problems/merge-intervals/", name: "Merge Intervals", difficulty: "Medium", acceptance: 46.8, frequency: 87.2 },
+            ],
+            'Meta.csv': [
+                { id: "297", link: "https://leetcode.com/problems/serialize-binary-tree/", name: "Serialize Binary Tree", difficulty: "Hard", acceptance: 55.6, frequency: 89.2 },
+                { id: "217", link: "https://leetcode.com/problems/contains-duplicate/", name: "Contains Duplicate", difficulty: "Easy", acceptance: 61.2, frequency: 94.0 },
+                { id: "1", link: "https://leetcode.com/problems/two-sum/", name: "Two Sum", difficulty: "Easy", acceptance: 49.2, frequency: 99.5 },
+                { id: "15", link: "https://leetcode.com/problems/3sum/", name: "3Sum", difficulty: "Medium", acceptance: 32.3, frequency: 88.4 },
+            ],
+        };
 
-/* ═══════════════════════════════════════════════════════════════════
-   PERSISTENCE  — single serialised Set stored under STORAGE_KEY
-═══════════════════════════════════════════════════════════════════ */
-async function loadCompleted() {
-    try {
-        const raw = await Store.get(STORAGE_KEY);
-        return new Set(raw ? JSON.parse(raw) : []);
-    } catch { return new Set(); }
-}
+        function getMockForFile(filename) {
+            return MOCK_BY_FILE[filename] || [];
+        }
 
-async function saveCompleted() {
-    await Store.set(STORAGE_KEY, JSON.stringify([...globalCompleted]));
-}
+        /* ═══════════════════════════════════════════════════════════════════
+           CSV PARSER  (header: ID,URL,Title,Difficulty,Acceptance%,Frequency%)
+        ═══════════════════════════════════════════════════════════════════ */
+        function parseCSV(text) {
+            return text.trim().split('\n').slice(1).flatMap(line => {
+                const t = line.trim(); if (!t) return [];
+                const c = t.split(',');
+                if (c.length < 6) return [];
+                return [{
+                    id: c[0].trim(),
+                    link: c[1].trim(),
+                    name: c[2].trim(),
+                    difficulty: c[3].trim(),
+                    acceptance: parseFloat(c[4].replace('%', '')) || 0,
+                    frequency: parseFloat(c[5].replace('%', '')) || 0,
+                }];
+            });
+        }
 
-/* ═══════════════════════════════════════════════════════════════════
-   DEDUPLICATION
-   Build a single Map of unique questions (keyed by URL) across all files.
-   This is the denominator for the GLOBAL progress bar only.
-═══════════════════════════════════════════════════════════════════ */
-function buildUniqueMap() {
-    uniqueMap.clear();
-    allDatasets.forEach(ds => ds.forEach(q => {
-        if (!uniqueMap.has(q.link)) uniqueMap.set(q.link, q);
-    }));
-}
+        /* ═══════════════════════════════════════════════════════════════════
+           PERSISTENCE — serialised Set stored under STORAGE_KEY
+        ═══════════════════════════════════════════════════════════════════ */
+        async function loadCompleted() {
+            try {
+                const raw = await Store.get(STORAGE_KEY);
+                if (!raw) return new Set();
+                // Handle both string (localStorage) and already-parsed (chrome.storage) values
+                const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+                return new Set(Array.isArray(parsed) ? parsed : []);
+            } catch (e) {
+                console.warn('Failed to load completed state:', e);
+                return new Set();
+            }
+        }
 
-/* ═══════════════════════════════════════════════════════════════════
-   PROGRESS BARS
+        async function saveCompleted() {
+            try {
+                await Store.set(STORAGE_KEY, JSON.stringify([...globalCompleted]));
+            } catch (e) {
+                console.warn('Failed to save completed state:', e);
+            }
+        }
 
-   Global bar  — X out of Y unique questions solved (Y = uniqueMap.size)
-                 Solving "Two Sum" in any file counts it once.
+        /* ═══════════════════════════════════════════════════════════════════
+           DEDUPLICATION
+           Build a single Map of unique questions (keyed by URL) across all files.
+        ═══════════════════════════════════════════════════════════════════ */
+        function buildUniqueMap() {
+            uniqueMap.clear();
+            allDatasets.forEach(ds => ds.forEach(q => {
+                if (!uniqueMap.has(q.link)) uniqueMap.set(q.link, q);
+            }));
+        }
 
-   File bar    — X out of N questions in the current file solved,
-                 where N is the raw (non-deduplicated) count of that file.
-                 If "Two Sum" appears in six-months AND thirty-days:
-                   · completing it counts +1 on BOTH file bars
-                   · but only +1 on the global bar
-═══════════════════════════════════════════════════════════════════ */
-function updateGlobalProgress() {
-    const total = uniqueMap.size;
-    const done  = [...globalCompleted].filter(l => uniqueMap.has(l)).length;
-    const pct   = total ? (done / total) * 100 : 0;
-    document.getElementById('global-bar').style.width     = pct + '%';
-    document.getElementById('global-fraction').textContent = `${done} / ${total}`;
-}
+        /* ═══════════════════════════════════════════════════════════════════
+           PROGRESS BARS
+        ═══════════════════════════════════════════════════════════════════ */
+        function updateGlobalProgress() {
+            const total = uniqueMap.size;
+            const done = [...globalCompleted].filter(l => uniqueMap.has(l)).length;
+            const pct = total ? (done / total) * 100 : 0;
+            document.getElementById('global-bar').style.width = pct + '%';
+            document.getElementById('global-fraction').textContent = `${done} / ${total}`;
+        }
 
-function updateFileProgress() {
-    const ds    = allDatasets[currentDatasetIdx] || [];
-    const total = ds.length;
-    const done  = ds.filter(q => globalCompleted.has(q.link)).length;
-    const pct   = total ? (done / total) * 100 : 0;
-    document.getElementById('file-prog-text').textContent = `${done} / ${total}`;
-    document.getElementById('file-prog-bar').style.width  = pct + '%';
-}
+        function updateFileProgress() {
+            const ds = allDatasets[currentDatasetIdx] || [];
+            const total = ds.length;
+            const done = ds.filter(q => globalCompleted.has(q.link)).length;
+            const pct = total ? (done / total) * 100 : 0;
+            document.getElementById('file-prog-text').textContent = `${done} / ${total}`;
+            document.getElementById('file-prog-bar').style.width = pct + '%';
+        }
 
-/* ═══════════════════════════════════════════════════════════════════
-   TOGGLE
-═══════════════════════════════════════════════════════════════════ */
-async function toggleQuestion(link) {
-    if (globalCompleted.has(link)) globalCompleted.delete(link);
-    else                            globalCompleted.add(link);
+        /* ═══════════════════════════════════════════════════════════════════
+           TOGGLE — mark/unmark a question as solved
+        ═══════════════════════════════════════════════════════════════════ */
+        async function toggleQuestion(link) {
+            if (globalCompleted.has(link)) {
+                globalCompleted.delete(link);
+            } else {
+                globalCompleted.add(link);
+            }
 
-    await saveCompleted();
-    updateGlobalProgress();
-    updateFileProgress();
+            await saveCompleted();
+            updateGlobalProgress();
+            updateFileProgress();
 
-    /* Update every row that shows this link (same Q may appear on other tabs) */
-    document.querySelectorAll(`.t-row[data-link="${CSS.escape(link)}"]`).forEach(row => {
-        const solved = globalCompleted.has(link);
-        row.classList.toggle('solved', solved);
-        const cb = row.querySelector('input[type="checkbox"]');
-        if (cb) cb.checked = solved;
-    });
-}
+            // Update ALL rows showing this link (same question may appear in other tabs)
+            const solved = globalCompleted.has(link);
+            document.querySelectorAll('.t-row').forEach(row => {
+                if (row.dataset.link === link) {
+                    row.classList.toggle('solved', solved);
+                    const cb = row.querySelector('input[type="checkbox"]');
+                    if (cb) cb.checked = solved;
+                }
+            });
+        }
 
-/* ═══════════════════════════════════════════════════════════════════
-   RENDER
-═══════════════════════════════════════════════════════════════════ */
-function renderQuestions() {
-    const container = document.getElementById('questions-container');
-    container.innerHTML = '';
+        /* ═══════════════════════════════════════════════════════════════════
+           RENDER
+        ═══════════════════════════════════════════════════════════════════ */
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
 
-    const start = (currentPage - 1) * ROWS_PER_PAGE;
-    const page  = filteredQuestions.slice(start, start + ROWS_PER_PAGE);
+            const start = (currentPage - 1) * ROWS_PER_PAGE;
+            const page = filteredQuestions.slice(start, start + ROWS_PER_PAGE);
 
-    document.getElementById('results-count').textContent =
-        `(${filteredQuestions.length} problem${filteredQuestions.length !== 1 ? 's' : ''})`;
+            document.getElementById('results-count').textContent =
+                `(${filteredQuestions.length} problem${filteredQuestions.length !== 1 ? 's' : ''})`;
 
-    if (!page.length) {
-        container.innerHTML = `<div class="empty-state">No problems match your filters.</div>`;
-    } else {
-        const frag = document.createDocumentFragment();
+            if (!page.length) {
+                container.innerHTML = `<div class="empty-state">No problems match your filters.</div>`;
+            } else {
+                const frag = document.createDocumentFragment();
 
-        page.forEach(q => {
-            const solved  = globalCompleted.has(q.link);
-            const diffCls = q.difficulty.toLowerCase();
+                page.forEach(q => {
+                    const solved = globalCompleted.has(q.link);
+                    const diffCls = q.difficulty.toLowerCase();
 
-            const row = document.createElement('div');
-            row.className = `t-grid t-row${solved ? ' solved' : ''}`;
-            row.dataset.link = q.link;
+                    const row = document.createElement('div');
+                    row.className = `t-grid t-row${solved ? ' solved' : ''}`;
+                    // Store link as data attribute for direct string comparison (avoids CSS.escape issues)
+                    row.dataset.link = q.link;
 
-            /* ── Checkbox cell ── */
-            const tdCheck = document.createElement('div');
-            tdCheck.className = 'td-check';
+                    /* ── Checkbox cell ── */
+                    const tdCheck = document.createElement('div');
+                    tdCheck.className = 'td-check';
 
-            const label = document.createElement('label');
-            label.className = 'cb';
-            label.title = solved ? 'Mark as incomplete' : 'Mark as complete';
+                    const label = document.createElement('label');
+                    label.className = 'cb';
+                    label.title = solved ? 'Mark as incomplete' : 'Mark as complete';
 
-            const input = document.createElement('input');
-            input.type    = 'checkbox';
-            input.checked = solved;
-            input.addEventListener('change', () => toggleQuestion(q.link));
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.checked = solved;
+                    // Use closure over q.link directly — no DOM attribute lookup needed
+                    input.addEventListener('change', () => toggleQuestion(q.link));
 
-            const box = document.createElement('span');
-            box.className = 'cb-box';
+                    const box = document.createElement('span');
+                    box.className = 'cb-box';
 
-            label.appendChild(input);
-            label.appendChild(box);
-            tdCheck.appendChild(label);
+                    label.appendChild(input);
+                    label.appendChild(box);
+                    tdCheck.appendChild(label);
 
-            /* ── Problem cell ── */
-            const tdProb = document.createElement('div');
-            tdProb.className = 'td-prob';
-            tdProb.innerHTML =
-                `<span class="prob-id">#${q.id}</span>` +
-                `<a href="${escHTML(q.link)}" target="_blank" rel="noopener" class="problem-link">${escHTML(q.name)}</a>`;
+                    /* ── Problem cell ── */
+                    const tdProb = document.createElement('div');
+                    tdProb.className = 'td-prob';
+                    tdProb.innerHTML =
+                        `<span class="prob-id">#${escHTML(q.id)}</span>` +
+                        `<a href="${escHTML(q.link)}" target="_blank" rel="noopener" class="problem-link">${escHTML(q.name)}</a>`;
 
-            /* ── Difficulty ── */
-            const tdDiff = document.createElement('div');
-            tdDiff.className = 'td-diff';
-            tdDiff.innerHTML = `<span class="badge ${diffCls}">${q.difficulty}</span>`;
+                    /* ── Difficulty ── */
+                    const tdDiff = document.createElement('div');
+                    tdDiff.className = 'td-diff';
+                    tdDiff.innerHTML = `<span class="badge ${diffCls}">${escHTML(q.difficulty)}</span>`;
 
-            /* ── Stats ── */
-            const tdAcc  = document.createElement('div');
-            tdAcc.className  = 'td-stat';
-            tdAcc.textContent = q.acceptance.toFixed(1) + '%';
+                    /* ── Stats ── */
+                    const tdAcc = document.createElement('div');
+                    tdAcc.className = 'td-stat';
+                    tdAcc.textContent = q.acceptance.toFixed(1) + '%';
 
-            const tdFreq = document.createElement('div');
-            tdFreq.className  = 'td-stat';
-            tdFreq.textContent = q.frequency.toFixed(1) + '%';
+                    const tdFreq = document.createElement('div');
+                    tdFreq.className = 'td-stat';
+                    tdFreq.textContent = q.frequency.toFixed(1) + '%';
 
-            row.appendChild(tdCheck);
-            row.appendChild(tdProb);
-            row.appendChild(tdDiff);
-            row.appendChild(tdAcc);
-            row.appendChild(tdFreq);
-            frag.appendChild(row);
+                    row.appendChild(tdCheck);
+                    row.appendChild(tdProb);
+                    row.appendChild(tdDiff);
+                    row.appendChild(tdAcc);
+                    row.appendChild(tdFreq);
+                    frag.appendChild(row);
+                });
+
+                container.appendChild(frag);
+            }
+
+            updatePaginationUI();
+        }
+
+        function updatePaginationUI() {
+            const total = Math.max(1, Math.ceil(filteredQuestions.length / ROWS_PER_PAGE));
+            document.getElementById('current-page').textContent = currentPage;
+            document.getElementById('total-pages').textContent = total;
+            document.getElementById('btn-prev').disabled = currentPage <= 1;
+            document.getElementById('btn-next').disabled = currentPage >= total;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           FILTERS & SORT
+        ═══════════════════════════════════════════════════════════════════ */
+        function applyFiltersAndSort() {
+            const ds = allDatasets[currentDatasetIdx] || [];
+            const search = document.getElementById('search').value.toLowerCase().trim();
+            const diff = document.getElementById('filter-difficulty').value;
+            const sort = document.getElementById('sort-by').value;
+
+            filteredQuestions = ds.filter(q =>
+                (!search || q.name.toLowerCase().includes(search) || q.id.includes(search)) &&
+                (diff === 'All' || q.difficulty === diff)
+            );
+
+            filteredQuestions.sort((a, b) =>
+                sort === 'freq-desc' ? b.frequency - a.frequency :
+                    sort === 'acc-desc' ? b.acceptance - a.acceptance :
+                        parseInt(a.id) - parseInt(b.id)
+            );
+
+            currentPage = 1;
+            renderQuestions();
+            updateFileProgress();
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           TABS — display names strip .csv extension
+        ═══════════════════════════════════════════════════════════════════ */
+        function renderTabs() {
+            const wrap = document.getElementById('dataset-tabs');
+            wrap.innerHTML = '';
+            FILE_NAMES.forEach((filename, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
+                btn.textContent = displayName(filename);   // ← no .csv shown
+                btn.onclick = () => selectDataset(i);
+                wrap.appendChild(btn);
+            });
+        }
+
+        function selectDataset(idx) {
+            currentDatasetIdx = idx;
+            // Show clean name in the file meta row as well
+            document.getElementById('current-file-label').textContent = displayName(FILE_NAMES[idx]);
+            document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+            applyFiltersAndSort();
+        }
+
+        /* ═══════════════════════════════════════════════════════════════════
+           DARK MODE
+        ═══════════════════════════════════════════════════════════════════ */
+        function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); }
+
+        async function loadTheme() {
+            try {
+                const saved = await Store.get(THEME_KEY);
+                const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                applyTheme(saved ?? sys);
+            } catch {
+                applyTheme('light');
+            }
+        }
+
+        document.getElementById('theme-btn').addEventListener('click', async () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            await Store.set(THEME_KEY, next);
         });
 
-        container.appendChild(frag);
-    }
+        /* ═══════════════════════════════════════════════════════════════════
+           BOOTSTRAP
+        ═══════════════════════════════════════════════════════════════════ */
+        async function loadData() {
+            await loadTheme();
+            globalCompleted = await loadCompleted();
 
-    updatePaginationUI();
-}
+            let usedFallback = false;
 
-function updatePaginationUI() {
-    const total = Math.max(1, Math.ceil(filteredQuestions.length / ROWS_PER_PAGE));
-    document.getElementById('current-page').textContent = currentPage;
-    document.getElementById('total-pages').textContent  = total;
-    document.getElementById('btn-prev').disabled = currentPage <= 1;
-    document.getElementById('btn-next').disabled = currentPage >= total;
-}
+            try {
+                const results = await Promise.all(
+                    FILE_NAMES.map(filename =>
+                        fetch(filename).then(r => {
+                            if (!r.ok) throw new Error('HTTP ' + r.status);
+                            return r.text();
+                        })
+                    )
+                );
+                allDatasets = results.map(parseCSV);
+            } catch {
+                usedFallback = true;
+                document.getElementById('fallback-notice').style.display = 'block';
+                // Use per-file mock data mapped by filename
+                allDatasets = FILE_NAMES.map(f => getMockForFile(f));
+            }
 
-/* ═══════════════════════════════════════════════════════════════════
-   FILTERS & SORT
-═══════════════════════════════════════════════════════════════════ */
-function applyFiltersAndSort() {
-    const ds     = allDatasets[currentDatasetIdx] || [];
-    const search = document.getElementById('search').value.toLowerCase().trim();
-    const diff   = document.getElementById('filter-difficulty').value;
-    const sort   = document.getElementById('sort-by').value;
+            buildUniqueMap();
+            renderTabs();
+            selectDataset(0);
+            updateGlobalProgress();
+        }
 
-    filteredQuestions = ds.filter(q =>
-        (!search || q.name.toLowerCase().includes(search) || q.id.includes(search)) &&
-        (diff === 'All' || q.difficulty === diff)
-    );
+        /* ═══════════════════════════════════════════════════════════════════
+           EVENTS
+        ═══════════════════════════════════════════════════════════════════ */
+        document.getElementById('search').addEventListener('input', applyFiltersAndSort);
+        document.getElementById('filter-difficulty').addEventListener('change', applyFiltersAndSort);
+        document.getElementById('sort-by').addEventListener('change', applyFiltersAndSort);
 
-    filteredQuestions.sort((a, b) =>
-        sort === 'freq-desc' ? b.frequency  - a.frequency  :
-        sort === 'acc-desc'  ? b.acceptance - a.acceptance :
-        parseInt(a.id) - parseInt(b.id)
-    );
+        document.getElementById('btn-prev').addEventListener('click', () => {
+            if (currentPage > 1) { currentPage--; renderQuestions(); }
+        });
+        document.getElementById('btn-next').addEventListener('click', () => {
+            const total = Math.ceil(filteredQuestions.length / ROWS_PER_PAGE);
+            if (currentPage < total) { currentPage++; renderQuestions(); }
+        });
 
-    currentPage = 1;
-    renderQuestions();
-    updateFileProgress();
-}
+        /* ═══════════════════════════════════════════════════════════════════
+           UTILS
+        ═══════════════════════════════════════════════════════════════════ */
+        function escHTML(s) {
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
 
-/* ═══════════════════════════════════════════════════════════════════
-   TABS
-═══════════════════════════════════════════════════════════════════ */
-function renderTabs() {
-    const wrap = document.getElementById('dataset-tabs');
-    wrap.innerHTML = '';
-    FILE_NAMES.forEach((name, i) => {
-        const btn = document.createElement('button');
-        btn.className = 'tab-btn' + (i === 0 ? ' active' : '');
-        btn.textContent = name;
-        btn.onclick = () => selectDataset(i);
-        wrap.appendChild(btn);
-    });
-}
-
-function selectDataset(idx) {
-    currentDatasetIdx = idx;
-    document.getElementById('current-file-label').textContent = FILE_NAMES[idx];
-    document.querySelectorAll('.tab-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
-    applyFiltersAndSort();
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   DARK MODE
-═══════════════════════════════════════════════════════════════════ */
-function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); }
-
-async function loadTheme() {
-    const saved = await Store.get(THEME_KEY);
-    /* Also respect system preference if nothing saved */
-    const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    applyTheme(saved ?? sys);
-}
-
-document.getElementById('theme-btn').addEventListener('click', async () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    applyTheme(next);
-    await Store.set(THEME_KEY, next);
-});
-
-/* ═══════════════════════════════════════════════════════════════════
-   BOOTSTRAP
-═══════════════════════════════════════════════════════════════════ */
-async function loadData() {
-    await loadTheme();
-    globalCompleted = await loadCompleted();
-
-    try {
-        const results = await Promise.all(
-            FILE_NAMES.map(url => fetch(url).then(r => {
-                if (!r.ok) throw new Error('HTTP ' + r.status);
-                return r.text();
-            }))
-        );
-        allDatasets = results.map(parseCSV);
-    } catch {
-        document.getElementById('fallback-notice').style.display = 'block';
-        allDatasets = MOCK;
-    }
-
-    buildUniqueMap();   // must run after allDatasets is populated
-    renderTabs();
-    selectDataset(0);   // triggers applyFiltersAndSort → renderQuestions → updateFileProgress
-    updateGlobalProgress();
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   EVENTS
-═══════════════════════════════════════════════════════════════════ */
-document.getElementById('search').addEventListener('input', applyFiltersAndSort);
-document.getElementById('filter-difficulty').addEventListener('change', applyFiltersAndSort);
-document.getElementById('sort-by').addEventListener('change', applyFiltersAndSort);
-
-document.getElementById('btn-prev').addEventListener('click', () => {
-    if (currentPage > 1) { currentPage--; renderQuestions(); }
-});
-document.getElementById('btn-next').addEventListener('click', () => {
-    if (currentPage < Math.ceil(filteredQuestions.length / ROWS_PER_PAGE))
-        { currentPage++; renderQuestions(); }
-});
-
-/* ═══════════════════════════════════════════════════════════════════
-   UTILS
-═══════════════════════════════════════════════════════════════════ */
-function escHTML(s) {
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-window.addEventListener('DOMContentLoaded', loadData);
-</script>
+        window.addEventListener('DOMContentLoaded', loadData);
+    </script>
 </body>
+
 </html>
