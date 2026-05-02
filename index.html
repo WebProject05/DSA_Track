@@ -131,11 +131,20 @@
 
     /* notice */
     .notice{
-      display:none;
       background:var(--accent-l);border:1px solid var(--accent);
       color:var(--accent);border-radius:8px;
-      padding:.75rem 1rem;margin-bottom:1.5rem;font-size:.85rem;
+      padding:.85rem 1.1rem;margin-bottom:1.5rem;font-size:.83rem;line-height:1.7;
     }
+    .notice.warn{
+      background:#fefce8;border-color:#ca8a04;color:#713f12;
+    }
+    [data-theme="dark"] .notice.warn{background:#1c1500;border-color:#9e6a03;color:#e3b341;}
+    .notice pre{
+      background:rgba(0,0,0,.07);border-radius:5px;padding:.3rem .6rem;
+      font-family:'JetBrains Mono',monospace;font-size:.75rem;margin:.3rem 0;
+      white-space:pre-wrap;word-break:break-all;
+    }
+    .notice code{font-family:'JetBrains Mono',monospace;font-size:.8em;background:rgba(0,0,0,.07);padding:.05rem .3rem;border-radius:3px;}
 
     /* ══════════════════════════════════════
        STATS CARDS ROW
@@ -463,8 +472,8 @@
 <!-- ══ MAIN ══ -->
 <main class="main">
 
-  <div id="fallback-notice" class="notice">
-    ⚠ Could not load CSV files. Showing demo data. Serve from a local web server (e.g. <code>npx serve .</code>) with CSV files in a <code>data/</code> folder, and a <code>data/manifest.json</code> listing them.
+  <div id="fallback-notice" class="notice" style="display:none">
+    <div id="notice-body"></div>
   </div>
 
   <!-- Stats row -->
@@ -664,16 +673,38 @@ const DEMO = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════
-   CSV PARSER
+   CSV PARSER  — handles quoted fields, CRLF, BOM
+   Header expected: ID,URL,Title,Difficulty,Acceptance%,Frequency%
 ═══════════════════════════════════════════════════════════════════ */
+function parseCSVLine(line){
+  // Proper RFC-4180 parser: handles "field with, comma" and "field with ""quotes"""
+  const fields=[]; let cur='', inQ=false;
+  for(let i=0;i<line.length;i++){
+    const ch=line[i];
+    if(inQ){
+      if(ch==='"'&&line[i+1]==='"'){ cur+='"'; i++; }
+      else if(ch==='"'){ inQ=false; }
+      else { cur+=ch; }
+    } else {
+      if(ch==='"'){ inQ=true; }
+      else if(ch===','){ fields.push(cur.trim()); cur=''; }
+      else { cur+=ch; }
+    }
+  }
+  fields.push(cur.trim());
+  return fields;
+}
+
 function parseCSV(text){
-  return text.trim().split('\n').slice(1).flatMap(line=>{
+  // Strip BOM, normalise CRLF
+  const lines = text.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim().split('\n');
+  return lines.slice(1).flatMap(line=>{
     const t=line.trim(); if(!t) return [];
-    const c=t.split(',');
+    const c=parseCSVLine(t);
     if(c.length<6) return [];
     return[{
-      id:c[0].trim(), link:c[1].trim(), name:c[2].trim(),
-      difficulty:c[3].trim(),
+      id:c[0], link:c[1], name:c[2],
+      difficulty:c[3],
       acceptance:parseFloat(c[4].replace('%',''))||0,
       frequency:parseFloat(c[5].replace('%',''))||0,
     }];
@@ -682,21 +713,70 @@ function parseCSV(text){
 
 /* ═══════════════════════════════════════════════════════════════════
    LOAD FILES DYNAMICALLY
-   Reads data/manifest.json → loads each CSV from data/ folder
+   Reads data/manifest.json → loads each CSV from data/ folder.
+
+   On GitHub Pages: commit your CSVs to  data/  in the repo root
+   and commit  data/manifest.json  listing them. That's all.
 ═══════════════════════════════════════════════════════════════════ */
 async function loadCSVsFromFolder(){
-  // 1. Fetch manifest
-  const manifest = await fetch(MANIFEST_FILE).then(r=>{ if(!r.ok) throw new Error('no manifest'); return r.json(); });
-  const files = manifest.files || [];
-  if(!files.length) throw new Error('manifest empty');
+  // ── Step 1: fetch manifest ──────────────────────────────────────
+  let manifestRes;
+  try { manifestRes = await fetch(MANIFEST_FILE); }
+  catch(e){ throw new DiagError('network', `Could not reach <code>${MANIFEST_FILE}</code>. Network error: ${e.message}`); }
 
-  // 2. Fetch all CSVs in parallel
-  const results = await Promise.all(
-    files.map(f=>fetch(DATA_FOLDER+f).then(r=>{ if(!r.ok) throw new Error('CSV 404: '+f); return r.text(); }))
+  if(!manifestRes.ok){
+    if(manifestRes.status===404)
+      throw new DiagError('manifest404',
+        `<code>${MANIFEST_FILE}</code> not found (404).<br>
+         Create this file in your repo at <code>data/manifest.json</code> with content:<br>
+         <pre>{ "files": ["Amazon.csv", "Google.csv"] }</pre>`);
+    throw new DiagError('manifestErr', `Fetching <code>${MANIFEST_FILE}</code> returned HTTP ${manifestRes.status}.`);
+  }
+
+  let manifest;
+  try { manifest = await manifestRes.json(); }
+  catch{ throw new DiagError('manifestJson', `<code>${MANIFEST_FILE}</code> exists but is not valid JSON. Check the file syntax.`); }
+
+  const files = manifest.files;
+  if(!Array.isArray(files)||!files.length)
+    throw new DiagError('manifestEmpty',
+      `<code>${MANIFEST_FILE}</code> is missing a <code>"files"</code> array, or the array is empty.<br>
+       Expected: <pre>{ "files": ["Amazon.csv", "Google.csv"] }</pre>`);
+
+  // ── Step 2: fetch each CSV ──────────────────────────────────────
+  const results = await Promise.allSettled(
+    files.map(f=>fetch(DATA_FOLDER+encodeURIComponent(f)).then(r=>{
+      if(!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.text();
+    }))
   );
 
-  fileNames  = files;
-  allDatasets = results.map(parseCSV);
+  const failed = [];
+  const texts  = [];
+  results.forEach((r,i)=>{
+    if(r.status==='fulfilled'){ texts.push(r.value); }
+    else { failed.push(`<code>${files[i]}</code> — ${r.reason?.message||r.reason}`); texts.push(''); }
+  });
+
+  if(failed.length===files.length)
+    throw new DiagError('allCSVs404',
+      `Every CSV returned an error. Make sure the files are committed to <code>data/</code> in your repo.<br>
+       Failed files:<br>${failed.join('<br>')}`);
+
+  // Partial success: load what we can, warn about missing ones
+  if(failed.length){
+    showNotice('warn',
+      `⚠ ${failed.length} CSV file(s) could not be loaded and were skipped:<br>${failed.join('<br>')}`);
+  }
+
+  // Only keep files that loaded successfully
+  fileNames   = files.filter((_,i)=>results[i].status==='fulfilled');
+  allDatasets = texts.filter(t=>t!=='').map(parseCSV);
+}
+
+/* Typed error so init() can show the right message */
+class DiagError extends Error {
+  constructor(code, html){ super(code); this.code=code; this.html=html; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1026,6 +1106,16 @@ $('btn-export').addEventListener('click',()=>{
 });
 
 /* ═══════════════════════════════════════════════════════════════════
+   NOTICE BANNER
+═══════════════════════════════════════════════════════════════════ */
+function showNotice(type, html){
+  const el=$('fallback-notice');
+  $('notice-body').innerHTML=html;
+  el.className='notice'+(type==='warn'?' warn':'');
+  el.style.display='block';
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    TOAST
 ═══════════════════════════════════════════════════════════════════ */
 let toastTimer;
@@ -1115,12 +1205,15 @@ async function init(){
   await loadState();
   renderStreak();
 
-  let usedFallback=false;
   try{
     await loadCSVsFromFolder();
-  } catch{
-    usedFallback=true;
-    $('fallback-notice').style.display='block';
+  } catch(e){
+    const html = (e instanceof DiagError)
+      ? `<strong>⚠ Could not load your CSV data.</strong><br>${e.html}<br><br>
+         <em>Meanwhile, demo data is shown below so you can see the UI.</em>`
+      : `<strong>⚠ Unexpected error loading data:</strong> ${esc(String(e))}<br>
+         Check the browser console (F12) for details. Showing demo data.`;
+    showNotice('error', html);
     fileNames=Object.keys(DEMO);
     allDatasets=fileNames.map(f=>DEMO[f]||[]);
   }
