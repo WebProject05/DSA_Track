@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DSA Tracker</title>
+  <title>DenTrack</title>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ══════════════════════════════════════
@@ -87,7 +87,6 @@
       color:#fff;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;
     }
     .brand-text{font-size:.95rem;font-weight:700;letter-spacing:-.025em;color:var(--text);}
-    .brand-sub{font-size:.7rem;color:var(--text3);font-weight:400;margin-left:.1rem;}
 
     .topbar-mid{flex:1;display:flex;align-items:center;justify-content:center;gap:1.5rem;}
 
@@ -169,13 +168,13 @@
     /* ══════════════════════════════════════
        TABS
     ══════════════════════════════════════ */
-    .tabs-wrap{position:relative;margin-bottom:1.25rem;}
     .tabs-row{
       display:flex;gap:0;
       border-bottom:1px solid var(--border);
       overflow-x:auto;
       scrollbar-width:none;
       transition:border-color .2s;
+      -webkit-overflow-scrolling:touch;
     }
     .tabs-row::-webkit-scrollbar{display:none;}
     .tab-btn{
@@ -200,7 +199,7 @@
        TOOLBAR
     ══════════════════════════════════════ */
     .toolbar{display:flex;gap:.6rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;}
-    .search-wrap{flex:1;min-width:180px;position:relative;}
+    .search-wrap{flex:1;min-width:140px;position:relative;}
     .search-icon{position:absolute;left:.7rem;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none;}
     .tb-input,.tb-select{
       background:var(--surface);border:1px solid var(--border);
@@ -209,9 +208,10 @@
     }
     .tb-input{width:100%;padding:.45rem .75rem .45rem 2.1rem;}
     .tb-select{
-      padding:.45rem 2rem .45rem .75rem;min-width:140px;appearance:none;cursor:pointer;
+      padding:.45rem 2rem .45rem .75rem;min-width:130px;appearance:none;cursor:pointer;
       background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%236b6659' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
       background-repeat:no-repeat;background-position:right .6rem center;
+      width:100%;
     }
     .tb-input:focus,.tb-select:focus{border-color:var(--accent);background:var(--bg);}
 
@@ -231,12 +231,12 @@
     /* ══════════════════════════════════════
        FILE META
     ══════════════════════════════════════ */
-    .file-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;gap:1rem;}
-    .file-meta-left{display:flex;align-items:center;gap:.5rem;min-width:0;}
-    .file-name{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:500;color:var(--text);}
-    .results-count{font-size:.75rem;color:var(--text3);}
+    .file-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem;gap:1rem;flex-wrap:wrap;}
+    .file-meta-left{display:flex;align-items:center;gap:.5rem;min-width:0;flex:1;}
+    .file-name{font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+    .results-count{font-size:.75rem;color:var(--text3);white-space:nowrap;}
     .file-prog{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
-    .file-prog-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text2);}
+    .file-prog-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text2);white-space:nowrap;}
     .file-prog-track{width:80px;height:4px;background:var(--prog-t);border-radius:100px;overflow:hidden;}
     .file-prog-fill{height:100%;background:var(--prog);border-radius:100px;width:0%;transition:width .35s ease;}
 
@@ -250,11 +250,18 @@
       box-shadow:var(--card-shadow);
       transition:border-color .2s;
     }
-    /* cols: check | id | problem | tags | diff | acc | freq | note */
+    /* Inner scroll container — this is what scrolls horizontally */
+    .table-scroll{
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      border-radius:10px;
+    }
+    /* cols: check | id | problem | note-dot | diff | acc | freq | note-btn */
     .t-grid{
       display:grid;
-      grid-template-columns:46px 52px minmax(0,3fr) 46px 105px 95px 95px 40px;
+      grid-template-columns:46px 52px minmax(180px,3fr) 46px 105px 95px 95px 40px;
       align-items:center;
+      min-width:680px; /* table never shrinks below this — scrolls instead */
     }
     .t-head{background:var(--surface2);border-bottom:1px solid var(--border);height:38px;transition:background .2s,border-color .2s;}
     .th{font-size:.67rem;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;padding:0 .7rem;}
@@ -323,12 +330,13 @@
     /* ══════════════════════════════════════
        PAGINATION
     ══════════════════════════════════════ */
-    .pagination{display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+    .pagination{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
     .page-btns{display:flex;gap:.4rem;}
     .btn{
       background:var(--surface);border:1px solid var(--border);color:var(--text);
       padding:.38rem .85rem;border-radius:6px;font-size:.78rem;font-weight:500;
       font-family:inherit;cursor:pointer;transition:border-color .12s,background .12s;
+      white-space:nowrap;
     }
     .btn:hover:not(:disabled){border-color:var(--border-h);background:var(--surface2);}
     .btn:disabled{opacity:.3;cursor:not-allowed;}
@@ -340,14 +348,16 @@
     .modal-backdrop{
       position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;
       display:flex;align-items:center;justify-content:center;
+      padding:1rem;
       opacity:0;pointer-events:none;transition:opacity .18s;
     }
     .modal-backdrop.open{opacity:1;pointer-events:all;}
     .modal{
       background:var(--surface);border:1px solid var(--border);
-      border-radius:12px;width:min(520px,90vw);
+      border-radius:12px;width:min(520px,100%);
       padding:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,.18);
       transform:translateY(8px);transition:transform .18s;
+      max-height:90vh;overflow-y:auto;
     }
     .modal-backdrop.open .modal{transform:translateY(0);}
     .modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;}
@@ -367,7 +377,7 @@
       padding:.7rem .85rem;outline:none;transition:border-color .12s;line-height:1.55;
     }
     .note-textarea:focus{border-color:var(--accent);}
-    .modal-footer{display:flex;justify-content:flex-end;gap:.5rem;margin-top:.85rem;}
+    .modal-footer{display:flex;justify-content:flex-end;gap:.5rem;margin-top:.85rem;flex-wrap:wrap;}
     .btn-primary{
       background:var(--accent);border:none;color:#fff;
       padding:.4rem 1rem;border-radius:6px;font-size:.8rem;font-weight:600;
@@ -380,16 +390,6 @@
       font-family:inherit;cursor:pointer;transition:border-color .12s;
     }
     .btn-ghost:hover{border-color:var(--border-h);}
-
-    /* ══════════════════════════════════════
-       KEYBOARD SHORTCUT HINT
-    ══════════════════════════════════════ */
-    .kbd{
-      display:inline-flex;align-items:center;
-      border:1px solid var(--border);background:var(--surface2);
-      border-radius:3px;padding:.05rem .35rem;
-      font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--text3);
-    }
 
     /* ══════════════════════════════════════
        LOADING STATE
@@ -412,28 +412,83 @@
       background:var(--text);color:var(--bg);
       border-radius:8px;padding:.55rem 1.1rem;font-size:.8rem;font-weight:500;
       z-index:300;transition:transform .25s ease;pointer-events:none;
-      white-space:nowrap;
+      white-space:nowrap;max-width:90vw;text-align:center;
     }
     .toast.show{transform:translateX(-50%) translateY(0);}
 
     /* ══════════════════════════════════════
-       RESPONSIVE
+       MOBILE BOTTOM PROGRESS BAR
     ══════════════════════════════════════ */
-    @media(max-width:760px){
-      .topbar{padding:0 1rem;}
-      .main{padding:1rem 1rem 3rem;}
-      .t-grid{grid-template-columns:40px minmax(0,1fr) 90px 32px;}
-      .th:nth-child(2),.th:nth-child(5),.th:nth-child(6),.th:nth-child(7){display:none;}
-      .td-id,.td-stat{display:none;}
-      .gpill-track,.file-prog-track{display:none;}
-      .brand-text{display:none;}
-      .stats-row{grid-template-columns:repeat(2,1fr);}
-      .topbar-mid{display:none;}
+    .mobile-progress{
+      display:none;
+      background:var(--surface);border-top:1px solid var(--border);
+      padding:.6rem 1rem;
+      position:sticky;bottom:0;z-index:50;
     }
+    .mobile-progress-inner{display:flex;align-items:center;gap:.75rem;}
+    .mobile-progress-label{font-size:.72rem;color:var(--text2);font-weight:500;white-space:nowrap;}
+    .mobile-progress-track{flex:1;height:5px;background:var(--prog-t);border-radius:100px;overflow:hidden;}
+    .mobile-progress-fill{height:100%;background:var(--prog);border-radius:100px;width:0%;transition:width .4s ease;}
+    .mobile-progress-frac{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--text);white-space:nowrap;}
+
+    /* ══════════════════════════════════════
+       RESPONSIVE — TABLET (≤900px)
+    ══════════════════════════════════════ */
     @media(max-width:900px){
-      .t-grid{grid-template-columns:46px 46px minmax(0,1fr) 38px 100px 38px;}
-      .th:nth-child(6),.th:nth-child(7){display:none;}
-      .td-stat:last-child{display:none;}
+      .stats-row{grid-template-columns:repeat(2,1fr);}
+      .gpill-track{width:60px;}
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE — MOBILE (≤640px)
+    ══════════════════════════════════════ */
+    @media(max-width:640px){
+      .topbar{padding:0 .85rem;gap:.6rem;height:52px;}
+      .main{padding:.85rem .85rem 4rem;}
+
+      /* brand */
+      .brand-text{display:none;}
+
+      /* hide mid — show mobile-progress instead */
+      .topbar-mid{display:none;}
+      .mobile-progress{display:block;}
+
+      /* stats grid: 2×2 */
+      .stats-row{grid-template-columns:repeat(2,1fr);gap:.6rem;margin-bottom:1rem;}
+      .stat-card{padding:.7rem .85rem;}
+      .stat-card-val{font-size:1.25rem;}
+
+      /* toolbar stacks */
+      .toolbar{gap:.5rem;}
+      .search-wrap{min-width:0;}
+      .tb-select{min-width:0;font-size:.78rem;}
+
+      /* file-meta simplify */
+      .file-prog-track{display:none;}
+      .file-meta{gap:.5rem;}
+
+      /* pagination center */
+      .pagination{justify-content:center;}
+      .page-info{width:100%;text-align:center;order:3;}
+
+      /* notice */
+      .notice{font-size:.78rem;}
+
+      /* chips scroll */
+      .filter-chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:.3rem;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+      .filter-chips::-webkit-scrollbar{display:none;}
+
+      /* modal slides up from bottom */
+      .modal-backdrop{align-items:flex-end;padding:0;}
+      .modal{border-bottom-left-radius:0;border-bottom-right-radius:0;width:100%;max-height:85vh;}
+    }
+
+    /* ══════════════════════════════════════
+       RESPONSIVE — SMALL MOBILE (≤380px)
+    ══════════════════════════════════════ */
+    @media(max-width:380px){
+      .stat-card-val{font-size:1.1rem;}
+      .stat-card-sub{font-size:.66rem;}
     }
   </style>
 </head>
@@ -507,7 +562,7 @@
   <div class="toolbar" style="margin-top:1rem;">
     <div class="search-wrap">
       <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-      <input class="tb-input" type="text" id="search" placeholder="Search by name or ID… (press /)" autocomplete="off" />
+      <input class="tb-input" type="text" id="search" placeholder="Search by name or ID…" autocomplete="off" />
     </div>
     <select class="tb-select" id="sort-by">
       <option value="serial-asc">Sort: Default (ID)</option>
@@ -542,17 +597,19 @@
 
   <!-- Table -->
   <div class="table-wrap">
-    <div class="t-grid t-head">
-      <div class="th center">✓</div>
-      <div class="th right">#</div>
-      <div class="th">Problem</div>
-      <div class="th center">📝</div>
-      <div class="th">Difficulty</div>
-      <div class="th right">Acceptance</div>
-      <div class="th right">Frequency</div>
-      <div class="th"></div>
+    <div class="table-scroll">
+      <div class="t-grid t-head">
+        <div class="th center">✓</div>
+        <div class="th right">#</div>
+        <div class="th">Problem</div>
+        <div class="th center">📝</div>
+        <div class="th">Difficulty</div>
+        <div class="th right">Acceptance</div>
+        <div class="th right">Frequency</div>
+        <div class="th"></div>
+      </div>
+      <div id="questions-container"><div class="loading-state"><div class="spinner"></div>Loading…</div></div>
     </div>
-    <div id="questions-container"><div class="loading-state"><div class="spinner"></div>Loading…</div></div>
   </div>
 
   <!-- Pagination -->
@@ -565,6 +622,15 @@
   </div>
 
 </main>
+
+<!-- ══ MOBILE BOTTOM PROGRESS ══ -->
+<div class="mobile-progress" id="mobile-progress">
+  <div class="mobile-progress-inner">
+    <span class="mobile-progress-label">🔥 <span id="mobile-streak">0</span> streak</span>
+    <div class="mobile-progress-track"><div class="mobile-progress-fill" id="mobile-prog-bar"></div></div>
+    <span class="mobile-progress-frac" id="mobile-fraction">0 / 0</span>
+  </div>
+</div>
 
 <!-- ══ NOTE MODAL ══ -->
 <div class="modal-backdrop" id="note-modal">
@@ -590,15 +656,9 @@
 <script>
 /* ═══════════════════════════════════════════════════════════════════
    CONFIG
-   Put your CSV files in a folder called  data/
-   Create a  data/manifest.json  listing them:
-   { "files": ["Amazon.csv", "Google.csv", ...] }
-   
-   The tracker will auto-load every file listed there.
-   If manifest.json is missing, it falls back to demo data.
 ═══════════════════════════════════════════════════════════════════ */
-const DATA_FOLDER   = 'data/';          // folder containing CSVs
-const MANIFEST_FILE = 'data/manifest.json'; // auto-discovery manifest
+const DATA_FOLDER   = 'data/';
+const MANIFEST_FILE = 'data/manifest.json';
 
 const ROWS_PER_PAGE = 40;
 const STORAGE_KEY   = 'dsa-tracker-v4';
@@ -606,7 +666,6 @@ const THEME_KEY     = 'dsa-tracker-theme';
 const NOTES_KEY     = 'dsa-tracker-notes-v1';
 const STREAK_KEY    = 'dsa-tracker-streak';
 
-/* ─── helpers ─── */
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const $ = id => document.getElementById(id);
 
@@ -615,7 +674,6 @@ const $ = id => document.getElementById(id);
 ═══════════════════════════════════════════════════════════════════ */
 const Store = (() => {
   const useChrome = typeof chrome!=='undefined' && chrome?.storage?.sync?.get;
-
   async function get(key){
     if(useChrome) return new Promise(res=>chrome.storage.sync.get([key],r=>res(r[key]??null)));
     return localStorage.getItem(key);
@@ -634,7 +692,7 @@ let fileNames       = [];
 let allDatasets     = [];
 let uniqueMap       = new Map();
 let globalCompleted = new Set();
-let notes           = {};         // link → string
+let notes           = {};
 let streakData      = {lastDate:'', count:0};
 
 let currentDatasetIdx = 0;
@@ -673,11 +731,9 @@ const DEMO = {
 };
 
 /* ═══════════════════════════════════════════════════════════════════
-   CSV PARSER  — handles quoted fields, CRLF, BOM
-   Header expected: ID,URL,Title,Difficulty,Acceptance%,Frequency%
+   CSV PARSER
 ═══════════════════════════════════════════════════════════════════ */
 function parseCSVLine(line){
-  // Proper RFC-4180 parser: handles "field with, comma" and "field with ""quotes"""
   const fields=[]; let cur='', inQ=false;
   for(let i=0;i<line.length;i++){
     const ch=line[i];
@@ -696,7 +752,6 @@ function parseCSVLine(line){
 }
 
 function parseCSV(text){
-  // Strip BOM, normalise CRLF
   const lines = text.replace(/^\uFEFF/,'').replace(/\r\n/g,'\n').replace(/\r/g,'\n').trim().split('\n');
   return lines.slice(1).flatMap(line=>{
     const t=line.trim(); if(!t) return [];
@@ -712,14 +767,13 @@ function parseCSV(text){
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   LOAD FILES DYNAMICALLY
-   Reads data/manifest.json → loads each CSV from data/ folder.
-
-   On GitHub Pages: commit your CSVs to  data/  in the repo root
-   and commit  data/manifest.json  listing them. That's all.
+   LOAD FILES
 ═══════════════════════════════════════════════════════════════════ */
+class DiagError extends Error {
+  constructor(code, html){ super(code); this.code=code; this.html=html; }
+}
+
 async function loadCSVsFromFolder(){
-  // ── Step 1: fetch manifest ──────────────────────────────────────
   let manifestRes;
   try { manifestRes = await fetch(MANIFEST_FILE); }
   catch(e){ throw new DiagError('network', `Could not reach <code>${MANIFEST_FILE}</code>. Network error: ${e.message}`); }
@@ -728,22 +782,19 @@ async function loadCSVsFromFolder(){
     if(manifestRes.status===404)
       throw new DiagError('manifest404',
         `<code>${MANIFEST_FILE}</code> not found (404).<br>
-         Create this file in your repo at <code>data/manifest.json</code> with content:<br>
+         Create this file at <code>data/manifest.json</code>:<br>
          <pre>{ "files": ["Amazon.csv", "Google.csv"] }</pre>`);
     throw new DiagError('manifestErr', `Fetching <code>${MANIFEST_FILE}</code> returned HTTP ${manifestRes.status}.`);
   }
 
   let manifest;
   try { manifest = await manifestRes.json(); }
-  catch{ throw new DiagError('manifestJson', `<code>${MANIFEST_FILE}</code> exists but is not valid JSON. Check the file syntax.`); }
+  catch{ throw new DiagError('manifestJson', `<code>${MANIFEST_FILE}</code> is not valid JSON.`); }
 
   const files = manifest.files;
   if(!Array.isArray(files)||!files.length)
-    throw new DiagError('manifestEmpty',
-      `<code>${MANIFEST_FILE}</code> is missing a <code>"files"</code> array, or the array is empty.<br>
-       Expected: <pre>{ "files": ["Amazon.csv", "Google.csv"] }</pre>`);
+    throw new DiagError('manifestEmpty', `<code>${MANIFEST_FILE}</code> missing a <code>"files"</code> array.`);
 
-  // ── Step 2: fetch each CSV ──────────────────────────────────────
   const results = await Promise.allSettled(
     files.map(f=>fetch(DATA_FOLDER+encodeURIComponent(f)).then(r=>{
       if(!r.ok) throw new Error(`HTTP ${r.status}`);
@@ -760,23 +811,14 @@ async function loadCSVsFromFolder(){
 
   if(failed.length===files.length)
     throw new DiagError('allCSVs404',
-      `Every CSV returned an error. Make sure the files are committed to <code>data/</code> in your repo.<br>
-       Failed files:<br>${failed.join('<br>')}`);
+      `Every CSV returned an error.<br>${failed.join('<br>')}`);
 
-  // Partial success: load what we can, warn about missing ones
   if(failed.length){
-    showNotice('warn',
-      `⚠ ${failed.length} CSV file(s) could not be loaded and were skipped:<br>${failed.join('<br>')}`);
+    showNotice('warn', `⚠ ${failed.length} CSV(s) skipped:<br>${failed.join('<br>')}`);
   }
 
-  // Only keep files that loaded successfully
   fileNames   = files.filter((_,i)=>results[i].status==='fulfilled');
   allDatasets = texts.filter(t=>t!=='').map(parseCSV);
-}
-
-/* Typed error so init() can show the right message */
-class DiagError extends Error {
-  constructor(code, html){ super(code); this.code=code; this.html=html; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -800,30 +842,21 @@ async function loadState(){
   }catch{ streakData={lastDate:'',count:0}; }
 }
 
-async function saveCompleted(){
-  await Store.set(STORAGE_KEY, JSON.stringify([...globalCompleted]));
-}
-async function saveNotes(){
-  await Store.set(NOTES_KEY, JSON.stringify(notes));
-}
-async function saveStreak(){
-  await Store.set(STREAK_KEY, JSON.stringify(streakData));
-}
+async function saveCompleted(){ await Store.set(STORAGE_KEY, JSON.stringify([...globalCompleted])); }
+async function saveNotes(){ await Store.set(NOTES_KEY, JSON.stringify(notes)); }
+async function saveStreak(){ await Store.set(STREAK_KEY, JSON.stringify(streakData)); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   STREAK LOGIC
+   STREAK
 ═══════════════════════════════════════════════════════════════════ */
 function todayStr(){ return new Date().toISOString().slice(0,10); }
 
 async function bumpStreak(){
   const today = todayStr();
-  if(streakData.lastDate === today) return;  // already counted
+  if(streakData.lastDate === today) return;
   const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
-  if(streakData.lastDate === yesterday){
-    streakData.count++;
-  } else if(streakData.lastDate !== today){
-    streakData.count = 1;
-  }
+  if(streakData.lastDate === yesterday){ streakData.count++; }
+  else if(streakData.lastDate !== today){ streakData.count = 1; }
   streakData.lastDate = today;
   await saveStreak();
   renderStreak();
@@ -832,6 +865,7 @@ async function bumpStreak(){
 function renderStreak(){
   const n = streakData.count||0;
   $('streak-val').textContent = `${n} day streak`;
+  $('mobile-streak').textContent = n;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -845,14 +879,14 @@ function buildUniqueMap(){
 function updateStats(){
   const all = [...uniqueMap.values()];
   const total = all.length;
-  const solved = all.filter(q=>globalCompleted.has(q.link));
-  const solvedN = solved.length;
+  const solvedN = all.filter(q=>globalCompleted.has(q.link)).length;
   const pct = total?(solvedN/total)*100:0;
 
   $('global-bar').style.width=pct+'%';
   $('global-fraction').textContent=`${solvedN} / ${total}`;
+  $('mobile-prog-bar').style.width=pct+'%';
+  $('mobile-fraction').textContent=`${solvedN} / ${total}`;
 
-  // cards
   ['Easy','Medium','Hard'].forEach(d=>{
     const all_d = all.filter(q=>q.difficulty===d);
     const done_d = all_d.filter(q=>globalCompleted.has(q.link)).length;
@@ -883,8 +917,9 @@ async function toggleQuestion(link){
   await saveCompleted();
   updateStats();
   updateFileProgress();
+  refreshTabCounts();
 
-  const solved = globalCompleted.has(link);
+  const solved=globalCompleted.has(link);
   document.querySelectorAll('.t-row').forEach(row=>{
     if(row.dataset.link===link){
       row.classList.toggle('solved',solved);
@@ -943,7 +978,8 @@ function renderQuestions(){
 
       // difficulty
       const tdDiff=document.createElement('div'); tdDiff.className='td-diff';
-      tdDiff.innerHTML=`<span class="badge ${diffCls}">${esc(q.difficulty)}</span>`;
+      const badge=document.createElement('span'); badge.className=`badge ${diffCls}`; badge.textContent=q.difficulty;
+      tdDiff.append(badge);
 
       // acceptance
       const tdAcc=document.createElement('div'); tdAcc.className='td-stat'; tdAcc.textContent=q.acceptance.toFixed(1)+'%';
@@ -1064,7 +1100,7 @@ async function saveNote(){
   if(text) notes[currentNoteLink]=text; else delete notes[currentNoteLink];
   await saveNotes();
   closeNoteModal();
-  applyFiltersAndSort(); // re-render to update dots
+  applyFiltersAndSort();
   showToast('Note saved ✓');
 }
 
@@ -1106,7 +1142,7 @@ $('btn-export').addEventListener('click',()=>{
 });
 
 /* ═══════════════════════════════════════════════════════════════════
-   NOTICE BANNER
+   NOTICE
 ═══════════════════════════════════════════════════════════════════ */
 function showNotice(type, html){
   const el=$('fallback-notice');
@@ -1129,11 +1165,10 @@ function showToast(msg){
 ═══════════════════════════════════════════════════════════════════ */
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t);
-  const moon=$('.icon-moon'), sun=$('.icon-sun');
+  const moon=document.querySelector('.icon-moon'), sun=document.querySelector('.icon-sun');
   if(moon) moon.style.display=t==='dark'?'none':'block';
   if(sun)  sun.style.display=t==='dark'?'block':'none';
 }
-function $$(sel){ return document.querySelector(sel); }
 
 async function loadTheme(){
   const saved=await Store.get(THEME_KEY);
@@ -1169,7 +1204,6 @@ document.addEventListener('keydown',e=>{
     if($('note-modal').classList.contains('open')){ closeNoteModal(); return; }
     $('search').blur();
   }
-  // Tab navigation with ← → arrow keys (only when not in input)
   if((e.key==='ArrowLeft'||e.key==='ArrowRight')&&document.activeElement!==$('search')&&document.activeElement!==$('note-input')){
     const dir=e.key==='ArrowLeft'?-1:1;
     const next=Math.max(0,Math.min(fileNames.length-1,currentDatasetIdx+dir));
@@ -1189,15 +1223,6 @@ $('btn-next').addEventListener('click',()=>{
 });
 
 /* ═══════════════════════════════════════════════════════════════════
-   OVERRIDE toggleQuestion to refresh tab counts & stats
-═══════════════════════════════════════════════════════════════════ */
-const _orig = toggleQuestion;
-// patch inline after definition — handled by calling updateStats & refreshTabCounts inside toggleQuestion already
-// We re-assign inline:
-const _toggle = toggleQuestion;
-// eslint-disable-next-line no-global-assign
-
-/* ═══════════════════════════════════════════════════════════════════
    BOOTSTRAP
 ═══════════════════════════════════════════════════════════════════ */
 async function init(){
@@ -1210,9 +1235,8 @@ async function init(){
   } catch(e){
     const html = (e instanceof DiagError)
       ? `<strong>⚠ Could not load your CSV data.</strong><br>${e.html}<br><br>
-         <em>Meanwhile, demo data is shown below so you can see the UI.</em>`
-      : `<strong>⚠ Unexpected error loading data:</strong> ${esc(String(e))}<br>
-         Check the browser console (F12) for details. Showing demo data.`;
+         <em>Demo data shown below.</em>`
+      : `<strong>⚠ Unexpected error:</strong> ${esc(String(e))}<br>Showing demo data.`;
     showNotice('error', html);
     fileNames=Object.keys(DEMO);
     allDatasets=fileNames.map(f=>DEMO[f]||[]);
@@ -1222,26 +1246,6 @@ async function init(){
   renderTabs();
   selectDataset(0);
   updateStats();
-}
-
-// Patch toggleQuestion to also refresh tabs & stats
-async function toggleQuestion(link){
-  if(globalCompleted.has(link)) globalCompleted.delete(link);
-  else { globalCompleted.add(link); await bumpStreak(); }
-
-  await saveCompleted();
-  updateStats();
-  updateFileProgress();
-  refreshTabCounts();
-
-  const solved=globalCompleted.has(link);
-  document.querySelectorAll('.t-row').forEach(row=>{
-    if(row.dataset.link===link){
-      row.classList.toggle('solved',solved);
-      const cb=row.querySelector('input[type="checkbox"]');
-      if(cb) cb.checked=solved;
-    }
-  });
 }
 
 window.addEventListener('DOMContentLoaded',init);
